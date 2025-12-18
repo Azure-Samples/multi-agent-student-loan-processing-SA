@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+test_*.py
+test_data/
+*.md
+!README.md
+.env
+.env.*
+*.log
+.DS_Store

@@ -1,0 +1,10 @@
+{
+  "status": "APPROVED",
+  "aprRate": 7.5,
+  "reason": "Approved with standard rate due to moderate debt-to-income ratio.",
+  "dti": 44.0,
+  "studentNumber": "STU45678",
+  "loanApplicationId": "LOAN-STU45678",
+  "applicantName": "Jane Smith",
+  "loanAmount": 30000.0
+}

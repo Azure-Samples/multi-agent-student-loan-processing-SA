@@ -1,0 +1,7 @@
+{
+  "studentNumber": "STU45678",
+  "applicantName": "Jane Smith",
+  "loanAmount": 30000.0,
+  "grossMonthlyIncome": 5000.0,
+  "monthlyDebtPayments": 2200.0
+}

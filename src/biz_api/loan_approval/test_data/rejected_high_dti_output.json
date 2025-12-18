@@ -1,0 +1,10 @@
+{
+  "status": "REJECTED",
+  "aprRate": null,
+  "reason": "High debt-to-income ratio. DTI must be 45% or lower to qualify.",
+  "dti": 50.0,
+  "studentNumber": "STU78901",
+  "loanApplicationId": "LOAN-STU78901",
+  "applicantName": "Robert Wilson",
+  "loanAmount": 20000.0
+}

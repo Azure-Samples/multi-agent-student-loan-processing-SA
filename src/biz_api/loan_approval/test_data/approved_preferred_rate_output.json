@@ -1,0 +1,10 @@
+{
+  "status": "APPROVED",
+  "aprRate": 5.5,
+  "reason": "Approved with preferred rate due to excellent debt-to-income ratio.",
+  "dti": 33.33,
+  "studentNumber": "STU12345",
+  "loanApplicationId": "LOAN-STU12345",
+  "applicantName": "John Doe",
+  "loanAmount": 25000.0
+}
