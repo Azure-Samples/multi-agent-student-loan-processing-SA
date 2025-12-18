@@ -1,4 +1,4 @@
-# Multi-Agent Student Loan Assistant with Python and Microsoft Agent Framework
+﻿# Multi-Agent Student Loan Assistant with Python and Microsoft Agent Framework
 
 ⭐ If you like this sample, star it on GitHub — it helps a lot!
 
@@ -140,7 +140,6 @@ agent-loan-processing/
     │       │
     │       ├── api/                    # REST API routes
     │       │   ├── chat_routes.py      # Chat & document upload
-    │       │   ├── auth_routes.py      # Authentication
     │       │   └── status_routes.py    # Health & status checks
     │       │
     │       ├── services/               # Business services
@@ -150,8 +149,7 @@ agent-loan-processing/
     │       ├── models/                 # Pydantic data models
     │       │   ├── validation.py       # Validation result models
     │       │   ├── documents.py        # Document structure models
-    │       │   ├── chat.py             # Chat request/response models
-    │       │   └── user.py             # User authentication models
+    │       │   └── chat.py             # Chat request/response models
     │       │
     │       ├── config/                 # Application configuration
     │       │   ├── settings.py         # Environment settings
@@ -211,8 +209,6 @@ agent-loan-processing/
                 ├── rejected_high_dti_input.json
                 └── rejected_high_dti_output.json
 ```
-
-## 🚀 Quick Start
 
 ## Prerequisites
 
@@ -383,7 +379,7 @@ The script will:
 **Issue**: Azure OpenAI quota exceeded
 - **Solution**: Request quota increase in Azure Portal or use a different subscription
 
-## � Cost Estimation
+## 💰 Cost Estimation
 
 Pricing varies per region and usage, so it isn't possible to predict exact costs for your usage. However, you can try the [Azure pricing calculator](https://azure.microsoft.com/pricing/calculator/) for the resources below:
 
@@ -469,7 +465,7 @@ pytest test_loan_approval.py
 # - Monthly payment calculation
 ```
 
-## � Current Status
+## 📊 Current Status
 
 ### ✅ Completed Features
 
@@ -540,6 +536,3 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 ## Trademarks
 
 This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft trademarks or logos is subject to and must follow [Microsoft's Trademark & Brand Guidelines](https://www.microsoft.com/legal/intellectualproperty/trademarks/usage/general). Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship. Any use of third-party trademarks or logos are subject to those third-party's policies.
-#   E m e r g i n g - T e c h - T e a m 
- 
- 
