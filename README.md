@@ -89,8 +89,7 @@ Once deployed, follow these steps to process a student loan application:
    > **📝 Important**: The applicant name must match exactly in both documents
    
    **Sample Documents**: Test files are available in [`src/backend/app/upload_data/`](./src/backend/app/upload_data/)
-   - Format: `{prefix}_la.pdf` (loan application) and `{prefix}_bs.pdf` (bank statement)
-   - Prefix indicates the applicant (e.g., `john_la.pdf` and `john_bs.pdf`)
+
 
 **4. Confirm Document Upload**
    - Review the uploaded files in the chat interface
