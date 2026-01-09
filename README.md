@@ -65,6 +65,79 @@ The script provisions all resources and deploys 3 containerized services (backen
 - OpenAI error? Try different region (e.g., `eastus`)
 - Permissions issue? Request Contributor + User Access Administrator roles
 
+## 💬 How to Interact with the Agent
+
+Once deployed, follow these steps to process a student loan application:
+
+### Step-by-Step Guide
+
+**1. Greet the Agent**
+   - Open the frontend application in your browser
+   - Start with a friendly greeting (e.g., "Hello" or "Hi")
+   - The agent will introduce itself and explain its capabilities
+
+**2. Initiate the Application**
+   - Tell the agent you're ready to apply for a student loan
+   - Example: "I'd like to apply for a student loan" or "I'm ready to apply"
+
+**3. Upload Required Documents**
+   
+   Upload two PDF documents:
+   - **Loan Application (LA)**: Contains applicant information and loan details
+   - **Bank Statement (BS)**: Contains financial transaction history
+   
+   > **📝 Important**: The applicant name must match exactly in both documents
+   
+   **Sample Documents**: Test files are available in [`src/backend/app/upload_data/`](./src/backend/app/upload_data/)
+   - Format: `{prefix}_la.pdf` (loan application) and `{prefix}_bs.pdf` (bank statement)
+   - Prefix indicates the applicant (e.g., `john_la.pdf` and `john_bs.pdf`)
+
+**4. Confirm Document Upload**
+   - Review the uploaded files in the chat interface
+   - Confirm when both documents are ready for processing
+
+**5. Wait for OCR & Data Extraction**
+   - The agent uses GPT-4o to extract structured data from your PDFs
+   - This typically takes 10-30 seconds depending on document complexity
+   - You'll see real-time progress updates
+
+**6. Confirm Extracted Data**
+   - Review the extracted information displayed by the agent
+   - Verify accuracy and completeness
+   - Confirm to proceed with loan evaluation
+
+**7. Receive Loan Decision**
+   - The agent processes your application through the approval workflow
+   - Decision includes:
+     - ✅ Approval status (Approved/Rejected)
+     - 📊 DTI (Debt-to-Income) ratio calculation
+     - 💰 Interest rate (if approved)
+     - 📝 Detailed explanation of the decision
+
+**8. End Session**
+   - Thank the agent or start a new application
+   - All conversation history is preserved for your reference
+
+### Example Interaction
+
+```
+You: Hello!
+Agent: Welcome! I'm your Student Loan Assistant...
+
+You: I'd like to apply for a student loan
+Agent: Great! Please upload your loan application and bank statement...
+
+[Upload john_la.pdf and john_bs.pdf]
+
+You: I've uploaded both documents
+Agent: Processing your documents... [OCR in progress]
+
+Agent: Here's what I found... [displays extracted data]
+
+You: Looks good, please proceed
+Agent: Analyzing your application... ✅ Approved! Interest rate: 4.5%...
+```
+
 ## Features
 
 - Multi-agent supervisor architecture with GPT-4o
