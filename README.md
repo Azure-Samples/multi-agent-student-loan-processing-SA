@@ -1,4 +1,4 @@
-﻿# Multi-Agent Student Loan Assistant
+# Multi-Agent Student Loan Assistant
 
 ⭐ If you like this sample, star it on GitHub!
 
