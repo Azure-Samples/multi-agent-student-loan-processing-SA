@@ -127,7 +127,10 @@ Once deployed, follow these steps to process a student loan application:
 - Real-time streaming (SSE)
 - Automated cross-document validation
 
-## Architecture
+
+## Multi-Agent Architecture for Student Loan Processing
+![alt text](/media/architecture.png)
+## System Architecture
 
 ![alt text](/media/ArchitectureDiagrm.png)
 **3-Tier Multi-Agent System**:
