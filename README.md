@@ -1,8 +1,8 @@
 ﻿# Multi-Agent Student Loan Assistant
 
 ⭐ If you like this sample, star it on GitHub!
+![Student Loan Process Demo](media/StudentLoanProcess.gif)
 
-![Student Loan Process Demo](media/StudentLoanProcess.mp4)
 
 ## Overview
 
