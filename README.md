@@ -2,7 +2,9 @@
 
 ⭐ If you like this sample, star it on GitHub!
 
-![Student Loan Processing Demo](docs/assets/demo.gif)
+<video src="media/StudentLoanProcess.mp4" controls style="max-width: 100%;">
+  Your browser does not support the video tag.
+</video>
 
 ## Overview
 
@@ -117,26 +119,6 @@ Once deployed, follow these steps to process a student loan application:
    - Thank the agent or start a new application
    - All conversation history is preserved for your reference
 
-### Example Interaction
-
-```
-You: Hello!
-Agent: Welcome! I'm your Student Loan Assistant...
-
-You: I'd like to apply for a student loan
-Agent: Great! Please upload your loan application and bank statement...
-
-[Upload john_la.pdf and john_bs.pdf]
-
-You: I've uploaded both documents
-Agent: Processing your documents... [OCR in progress]
-
-Agent: Here's what I found... [displays extracted data]
-
-You: Looks good, please proceed
-Agent: Analyzing your application... ✅ Approved! Interest rate: 4.5%...
-```
-
 ## Features
 
 - Multi-agent supervisor architecture with GPT-4o
@@ -149,8 +131,7 @@ Agent: Analyzing your application... ✅ Approved! Interest rate: 4.5%...
 
 ## Architecture
 
-![Architecture Diagram](docs/assets/architecture.png)
-
+![alt text](/media/ArchitectureDiagrm.png)
 **3-Tier Multi-Agent System**:
 
 **🔵 Backend (FastAPI + Agent Framework)**
