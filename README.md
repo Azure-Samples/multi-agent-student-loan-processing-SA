@@ -1,7 +1,6 @@
 ﻿# Multi-Agent Student Loan Assistant
 
 ⭐ If you like this sample, star it on GitHub!
-![Student Loan Process Demo](media/StudentLoanProcess.gif)
 
 
 ## Overview
@@ -66,6 +65,8 @@ The script provisions all resources and deploys 3 containerized services (backen
 - Permissions issue? Request Contributor + User Access Administrator roles
 
 ## 💬 How to Interact with the Agent
+
+![Student Loan Process Demo](media/StudentLoanProcess.gif)
 
 Once deployed, follow these steps to process a student loan application:
 
