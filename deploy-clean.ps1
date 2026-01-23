@@ -31,8 +31,8 @@ Write-Host ""
 $RESOURCE_GROUP = Read-Host "Enter resource group name (default: rg-loan-processing)"
 if ([string]::IsNullOrWhiteSpace($RESOURCE_GROUP)) { $RESOURCE_GROUP = "rg-loan-processing" }
 
-$LOCATION = Read-Host "Enter Azure region (default: eastus)"
-if ([string]::IsNullOrWhiteSpace($LOCATION)) { $LOCATION = "eastus" }
+$LOCATION = Read-Host "Enter Azure region (please choose westus)"
+if ([string]::IsNullOrWhiteSpace($LOCATION)) { $LOCATION = "westus" }
 
 $defaultPrefix = "loan$(Get-Random -Minimum 1000 -Maximum 9999)"
 $PREFIX = Read-Host "Enter unique prefix (default: $defaultPrefix)"

@@ -1,6 +1,6 @@
 from typing import Any, AsyncGenerator, Dict
 from enum import Enum
-from agent_framework import WorkflowBuilder, Workflow, InMemoryCheckpointStorage, Case, Default
+from agent_framework import WorkflowBuilder, Workflow, InMemoryCheckpointStorage, Case, Default, ChatAgent
 from agent_framework.azure import AzureOpenAIChatClient
 from uuid import uuid4
 import logging
@@ -129,7 +129,8 @@ class OrchestrationAgent:
       self.decision_maker_agent = decision_maker_agent
       
       # Create ChatAgent for general Q&A conversations using Agent Framework pattern
-      self.chat_agent = azure_chat_client.create_agent(
+      self.chat_agent = ChatAgent(
+          chat_client=azure_chat_client,
           name=self.name,
           description=self.description,
           instructions=self.instructions

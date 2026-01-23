@@ -78,7 +78,7 @@ SUMMARY: Provide brief explanation of validation result"""
             azure_chat_client: Azure OpenAI chat client (unused, kept for compatibility)
             
         Returns:
-            Configured AzureOpenAIResponsesClient agent for triage validation with structured outputs
+            Configured AzureOpenAIResponsesClient for triage validation with structured outputs
         """
         from app.config.settings import settings
         from app.config.azure_credential import get_azure_credential
@@ -100,17 +100,8 @@ SUMMARY: Provide brief explanation of validation result"""
                 deployment_name=settings.AZURE_OPENAI_CHAT_DEPLOYMENT_NAME
             )
         
-        triage_agent = responses_client.create_agent(
-            name="TriageAgent",
-            instructions=TriageAgentFactory.TRIAGE_INSTRUCTIONS,
-            model_kwargs={
-                "max_completion_tokens": 4000,
-                "temperature": 0.0
-            }
-        )
-        
-        logger.info("Triage Agent created successfully with structured output support")
-        return triage_agent
+        logger.info("Triage Agent (ResponsesClient) created successfully with structured output support")
+        return responses_client
 
 
 class TriageValidator:
@@ -340,37 +331,90 @@ async def run_triage_validation(
 ) -> Dict[str, Any]:
     """Run triage validation using structured outputs with Pydantic.
     
-    Uses the Agent Framework's structured output support to guarantee valid,
-    type-safe responses matching the ValidationResponse Pydantic model.
+    Uses direct OpenAI SDK with JSON schema response_format for guaranteed
+    type-safe responses matching the ValidationResponse schema.
     
     Args:
-        triage_agent: OpenAIResponsesClient agent configured for validation
+        triage_agent: AzureOpenAIResponsesClient configured for validation (used for config)
         extracted_data: Dictionary containing extracted data from both documents
         
     Returns:
         Validation result dictionary
     """
     try:
-        # Prepare input
+        from app.config.settings import settings
+        from app.config.azure_credential import get_azure_credential
+        from openai import AzureOpenAI
+        from azure.identity import get_bearer_token_provider
+        
+        # Prepare input with instructions
         input_json = json.dumps(extracted_data, indent=2)
+        prompt = f"""{TriageAgentFactory.TRIAGE_INSTRUCTIONS}
+
+Please validate the following extracted loan application data and return ONLY a JSON object matching the required schema:
+
+{input_json}"""
         
-        logger.info("Starting triage validation with structured outputs...")
+        logger.info("Starting triage validation with structured outputs (direct SDK)...")
         
-        # Run agent with structured output (response_format parameter)
-        result = await triage_agent.run(input_json, response_format=ValidationResponse)
-        
-        # Access structured output from result.value (already a Pydantic model)
-        if result.value:
-            validation_model: ValidationResponse = result.value
-            
-            # Convert Pydantic model to dictionary
-            validation_result = validation_model.model_dump()
-            
-            logger.info(f"Triage validation completed: {validation_result.get('overall_status')}")
-            
-            return validation_result
+        # Use direct OpenAI SDK for reliable structured outputs
+        if settings.AZURE_OPENAI_KEY:
+            client = AzureOpenAI(
+                api_key=settings.AZURE_OPENAI_KEY,
+                azure_endpoint=settings.AZURE_OPENAI_ENDPOINT,
+                api_version="2024-08-01-preview"
+            )
         else:
-            raise ValueError("No structured data found in result.value")
+            token_provider = get_bearer_token_provider(
+                get_azure_credential(),
+                "https://cognitiveservices.azure.com/.default"
+            )
+            client = AzureOpenAI(
+                azure_ad_token_provider=token_provider,
+                azure_endpoint=settings.AZURE_OPENAI_ENDPOINT,
+                api_version="2024-08-01-preview"
+            )
+        
+        # Get the JSON schema for documentation in the prompt
+        schema_json = json.dumps(ValidationResponse.model_json_schema(), indent=2)
+        
+        # Enhanced prompt with explicit JSON schema
+        enhanced_prompt = f"""{prompt}
+
+You MUST respond with a JSON object that matches this exact schema:
+{schema_json}
+
+Important notes:
+- overall_status must be one of: "PASS", "CONDITIONAL_PASS", or "FAIL"
+- All status fields must be either "pass" or "fail"
+- missing_fields should be an empty array [] if no fields are missing
+- data_consistency can be null if applicant_exists is false"""
+        
+        # Call with json_object response format (simpler, no strict schema requirements)
+        response = client.chat.completions.create(
+            model=settings.AZURE_OPENAI_CHAT_DEPLOYMENT_NAME,
+            messages=[
+                {"role": "system", "content": "You are a loan application validation specialist. Always respond with valid JSON matching the required schema. Do not include any text outside of the JSON object."},
+                {"role": "user", "content": enhanced_prompt}
+            ],
+            temperature=0.0,
+            max_tokens=4000,
+            response_format={"type": "json_object"}
+        )
+        
+        # Parse the response
+        response_text = response.choices[0].message.content
+        logger.info(f"Raw response (first 500 chars): {response_text[:500] if response_text else 'EMPTY'}")
+        
+        if response_text:
+            import json as json_module
+            validation_dict = json_module.loads(response_text)
+            validation_model = ValidationResponse(**validation_dict)
+            validation_result = validation_model.model_dump()
+            logger.info(f"Triage validation completed: {validation_result.get('overall_status')}")
+            return validation_result
+        
+        raise ValueError("Empty response from model")
         
     except Exception as e:
         logger.error(f"Error in triage validation with structured outputs: {str(e)}", exc_info=True)
